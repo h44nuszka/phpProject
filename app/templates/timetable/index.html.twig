@@ -5,7 +5,28 @@
     {% endblock %}
 
     {% block body %}
-        <h3>
-            Timetable project by Hania Raj!
-        </h3>
+        <div class="container">
+            <div class="row">
+                <div class="col index-col">
+                    {% if data is defined and data|length %}
+                    {% for item in data %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text card-light">{{ item.datetime }}</p>
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <p class="card-text card-desc">{{ item.description }}</p>
+                            <p class="card-text card-light card-cat">Category: {{ item.category }}</p>
+                            <p class="card-text card-light card-tags">Tags: {{ item.tags|join(', ') }}</p>
+                            <a href="{{ item.id }}" class="btn btn-primary">Check your event</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                        <p>
+                            Empty list.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     {% endblock %}

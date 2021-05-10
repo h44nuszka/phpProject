@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}
+        Contacts
+    {% endblock %}
+
+    {% block body %}
+        <div class="container">
+            <div class="row">
+                <div class="col index-col">
+                    {% if data is defined and data|length %}
+                        {% for item in data %}
+                            <div class="card contact-card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.name }} {{ item.surname }} </h5>
+                                    {% if item.nick|length > 0 %}
+                                        <p class="card-text card-desc contact-card">({{ item.nick }})</p>
+                                    {% else %}
+                                    <p class="card-text card-desc contact-card"><br></p>
+                                    {% endif %}
+                                    <p class="card-text card-desc contact-card">Phone number: {{ item.phone_number }}</p>
+                                    <p class="card-text card-desc">Birth date: {{ item.birth_date }}</p>
+                                    <a href="{{ item.id }}" class="btn btn-primary">Check your contact</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>
+                            Empty list.
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
