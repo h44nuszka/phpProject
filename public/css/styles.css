@@ -1,0 +1,217 @@
+h1 {
+    font-weight: normal;
+    text-align: center;
+    margin: 3%;
+    color: whitesmoke;
+    background-color: darkslategrey;
+    padding: 2%;
+    border-radius: .25rem;
+}
+body{
+    background-color: whitesmoke;
+}
+.five-cols {
+    column-count: 5 !important;
+}
+
+.card{
+    /*
+    border-top: #333333;
+    border-style:solid;
+    border-width: 3px;
+    border-radius: 2px;
+     */
+    page-break-inside: avoid;
+    float:left;
+
+    height: 26rem;
+    overflow: hidden;
+    display:inline;
+    margin-top: 10%;
+}
+
+.card-title{
+    height: 3rem;
+    overflow: hidden;
+}
+
+.card-desc{
+    height: 4.3rem;
+    overflow: hidden;
+}
+
+.card-tags, .card-cat {
+    height: 1.5rem;
+    overflow: hidden;
+}
+
+.big-card{
+    height: auto;
+    width: auto;
+    margin-top: 2rem;
+}
+
+.big-card-desc{
+    height: auto;
+}
+
+.contact-card{
+    height: auto;
+}
+
+#more {
+    display: none;
+}
+
+.btn, .btn-primary {
+    background-color: #333333;
+    border-color: dimgrey;
+}
+.btn:hover{
+    background-color: dimgrey;
+}
+.btn:active{
+    background-color: dimgrey;
+}
+
+.btn-alter{
+    margin-top: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.card-light {
+    color: gray;
+    font-size: smaller;
+}
+.btn.btn-primary.active,
+.btn.btn-primary:active,
+.btn.btn-primary.active.focus,
+.btn.btn-primary.active:focus,
+.btn.btn-primary:active.focus,
+.btn.btn-primary:active:focus,
+.btn.btn-primary.focus,
+.btn.btn-primary:focus,
+.btn.btn-primary.hover,
+.btn.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled):active
+.btn-primary:not(:disabled):not(.disabled):active:focus
+{
+    background-color: darkslategray;
+    box-shadow:none;
+}
+.btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgb(62 63 56);}
+
+
+
+/* The sidebar menu */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 160px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    right: 0;
+    background-color: white;
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 40px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: darkslategrey;
+}
+
+.sidenav .navheader {
+    padding: 6px 8px 6px 16px;
+
+}
+
+.navigation {
+    margin-top: 2rem;
+    color: dimgrey;
+}
+.navigation a{
+    color: dimgrey;
+}
+.page-item.active .page-link{
+    background-color: darkslategrey;
+    border-color: #333333;
+}
+
+.page-link:focus{
+    box-shadow: 0 0 0 0.2rem rgb(0 0 0 / 25%);
+}
+
+.page-link:hover{
+    color: darkslategrey;
+}
+
+.form_placer{
+    margin-bottom: 10%;
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
+.sortable{
+    color: darkslategrey;
+}
+.sortable:hover{
+    text-decoration: none;
+    color: dimgrey;
+}
+
+.iconlink{
+    margin:5%;
+    text-decoration: none;
+    color: #333333;
+}
+.iconlink:hover{
+    text-decoration: none;
+    color: dimgrey;
+}
+.icon-align{
+    vertical-align: middle;
+}
+
+.dropdown-item-styled{
+    margin-bottom: 10%;
+    margin-left: 10%;
+    text-decoration: none;
+    color: dimgrey;
+}
+
+.dropdown-item-styled:{
+    margin-bottom: 10%;
+    margin-left: 10%;
+    text-decoration: none;
+    color: dimgrey;
+}
+.btn-primary:not(:disabled):not(.disabled):active{
+    color:darkslategrey;
+}
+a.dropdown-item, a.desc{
+    text-decoration: none;
+    color: dimgrey;
+}
+.show>.btn-primary.dropdown-toggle {
+    text-decoration: none;
+    background-color: darkslategrey;
+}
+.bi-person-plus, .bi-calendar-plus{
+    color:white;
+}
+.iconlink1{
+    text-decoration: none;
+    color: #333333;
+}

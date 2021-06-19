@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="action_back_to_list">
+                <source>action_back_to_list</source>
+                <target>Powrót do listy</target>
+            </trans-unit>
+            <trans-unit id="action_view">
+                <source>action_view</source>
+                <target>Zobacz</target>
+            </trans-unit>
+            <trans-unit id="action_edit">
+                <source>action_edit</source>
+                <target>Edytuj</target>
+            </trans-unit>
+            <trans-unit id="action_check_event">
+                <source>action_check_event</source>
+                <target>Zobacz więcej</target>
+            </trans-unit>
+            <trans-unit id="action_delete">
+                <source>action_delete</source>
+                <target>Usuń</target>
+            </trans-unit>
+            <trans-unit id="action_save">
+                <source>action_save</source>
+                <target>Zapisz</target>
+            </trans-unit>
+            <trans-unit id="label_actions">
+                <source>label_actions</source>
+                <target>Operacje</target>
+            </trans-unit>
+            <trans-unit id="label_add">
+                <source>label_add</source>
+                <target>Dodaj</target>
+            </trans-unit>
+            <trans-unit id="label_birth_date">
+                <source>label_birth_date</source>
+                <target>Data urodzenia</target>
+            </trans-unit>
+            <trans-unit id="label_category">
+                <source>label_category</source>
+                <target>Kategoria</target>
+            </trans-unit>
+            <trans-unit id="label_content">
+                <source>label_content</source>
+                <target>Zawartość</target>
+            </trans-unit>
+            <trans-unit id="label_created_at">
+                <source>label_created_at</source>
+                <target>Utworzono</target>
+            </trans-unit>
+            <trans-unit id="label_date">
+                <source>label_date</source>
+                <target>Data</target>
+            </trans-unit>
+            <trans-unit id="label_delete">
+                <source>label_delete</source>
+                <target>Usuń</target>
+            </trans-unit>
+            <trans-unit id="label_description">
+                <source>label_description</source>
+                <target>Opis</target>
+            </trans-unit>
+            <trans-unit id="label_filter">
+                <source>label_filter</source>
+                <target>Filtruj</target>
+            </trans-unit>
+            <trans-unit id="label_id">
+                <source>label_id</source>
+                <target>Id</target>
+            </trans-unit>
+            <trans-unit id="label_name">
+                <source>label_name</source>
+                <target>Imię</target>
+            </trans-unit>
+            <trans-unit id="label_nick">
+                <source>label_nick</source>
+                <target>Nick</target>
+            </trans-unit>
+            <trans-unit id="label_phone_number">
+                <source>label_phone_number</source>
+                <target>Numer telefonu</target>
+            </trans-unit>
+            <trans-unit id="label_search">
+                <source>label_search</source>
+                <target>Szukaj</target>
+            </trans-unit>
+            <trans-unit id="label_sort">
+                <source>label_sort</source>
+                <target>Sortuj</target>
+            </trans-unit>
+            <trans-unit id="label_surname">
+                <source>label_surname</source>
+                <target>Nazwisko</target>
+            </trans-unit>
+            <trans-unit id="label_tags">
+                <source>label_tags</source>
+                <target>Tagi</target>
+            </trans-unit>
+            <trans-unit id="label_title">
+                <source>label_title</source>
+                <target>Tytuł</target>
+            </trans-unit>
+            <trans-unit id="label_updated_at">
+                <source>label_updated_at</source>
+                <target>Ostatnio aktualizowano</target>
+            </trans-unit>
+            <trans-unit id="message_empty_list">
+                <source>message_empty_list</source>
+                <target>Lista jest pusta.</target>
+            </trans-unit>
+            <trans-unit id="message_category_contains_tasks">
+                <source>message_category_contains_tasks</source>
+                <target>Nie możesz usunąć kategorii, która jest powiązana z zadaniem.</target>
+            </trans-unit>
+            <trans-unit id="message_created_successfully">
+                <source>message_created_successfully</source>
+                <target>Utworzono pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message_delete_confirmation">
+                <source>message_delete_confirmation</source>
+                <target>Czy na pewno chcesz to usunąć?</target>
+            </trans-unit>
+            <trans-unit id="message_deleted_successfully">
+                <source>message_deleted_successfully</source>
+                <target>Usunięto pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="message_record_not_found">
+                <source>message_record_not_found</source>
+                <target>Rekord nie odnaleziony.</target>
+            </trans-unit>
+            <trans-unit id="message_sort_by">
+                <source>message_sort_by</source>
+                <target>Sortuj po</target>
+            </trans-unit>
+            <trans-unit id="message_updated_successfully">
+                <source>message_updated_successfully</source>
+                <target>Zaktualizowano pomyślnie!</target>
+            </trans-unit>
+            <trans-unit id="title_categories">
+                <source>title_categories</source>
+                <target>Kategorie</target>
+            </trans-unit>
+            <trans-unit id="title_category_edit">
+                <source>title_category_edit</source>
+                <target>Edytuj kategorię</target>
+            </trans-unit>
+            <trans-unit id="title_category_details">
+                <source>title_category_details</source>
+                <target>Szczegóły kategorii</target>
+            </trans-unit>
+            <trans-unit id="title_category_list">
+                <source>title_category_list</source>
+                <target>Lista kategorii</target>
+            </trans-unit>
+            <trans-unit id="title_contacts">
+                <source>title_contacts</source>
+                <target>Kontakty</target>
+            </trans-unit>
+            <trans-unit id="title_contact_create">
+                <source>title_contact_create</source>
+                <target>Stwórz kontakt</target>
+            </trans-unit>
+            <trans-unit id="title_contact_delete">
+                <source>title_contact_delete</source>
+                <target>Usuń kontakt</target>
+            </trans-unit>
+            <trans-unit id="title_contact_edit">
+                <source>title_contact_edit</source>
+                <target>Edycja kontaktu</target>
+            </trans-unit>
+            <trans-unit id="title_event">
+                <source>title_event</source>
+                <target>Twoje wydarzenie</target>
+            </trans-unit>
+            <trans-unit id="title_event_create">
+                <source>title_event_create</source>
+                <target>Utwórz wydarzenie</target>
+            </trans-unit>
+            <trans-unit id="title_event_edit">
+                <source>title_event_edit</source>
+                <target>Edycja wydarzenia</target>
+            </trans-unit>
+            <trans-unit id="title_record_details">
+            <source>title_record_details</source>
+            <target>Szczegóły rekordu #%id%</target>
+            </trans-unit>
+            <trans-unit id="title_record_list">
+                <source>title_record_list</source>
+                <target>Lista rekordów</target>
+            </trans-unit>
+            <trans-unit id="title_timetable">
+                <source>title_timetable</source>
+                <target>Terminarz</target>
+            </trans-unit>
+            <trans-unit id="title_this_contact">
+                <source>title_this_contact</source>
+                <target>Kontakt</target>
+            </trans-unit>
+            <trans-unit id="title_your_profile">
+            <source>title_your_profile</source>
+            <target>Twój profil</target>
+        </trans-unit>
+            <trans-unit id="title_your_timetable">
+                <source>title_your_timetable</source>
+                <target>Twój terminarz</target>
+            </trans-unit>
+            <trans-unit id="0">
+                <source>message_item_not_found</source>
+                <target>messages</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

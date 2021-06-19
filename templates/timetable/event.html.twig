@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title_event'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% if event is defined and event|length %}
+        <div class="container">
+            <div class="row">
+                <div class="col align-self-center">
+                    <div class="card big-card">
+                        <div class="card-body">
+                            <p class="card-text card-light">{{ event.date|format_date('long') }}</p>
+                            <h5 class="card-title">{{ event.title }}</h5>
+                            <p class="card-text card-desc big-card-desc">{{ event.description }}</p>
+                            <p class="card-text card-light card-cat">{{ 'label_category'|trans }}: {{ event.category.title }}</p>
+                            <p class="card-text card-light card-tags">{{ 'label_tags'|trans }}:</p>
+                            <a href="{{ url('event_index') }}" class="btn btn-primary">
+                                {{ 'action_back_to_list'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>
+            {{ 'message_record_not_found'|trans }}
+        </p>
+    {% endif %}
+{% endblock %}

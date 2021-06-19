@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+
+    {% block title %}
+        {{ 'title_timetable'|trans }}
+    {% endblock %}
+
+    {% block body %}
+
+
+        <div class="container">
+            <ul class="row nav nav-pills">
+                <li><a href="{{ url('event_create') }}" class="btn btn-primary btn-alter" title="{{ 'label_add'|trans }}">
+                        <i class="bi bi-calendar-plus"></i>
+                    </a></li>
+                <li><a href="{{ url('event_index') }}" class="btn btn-primary btn-alter">{{ 'label_filter'|trans }}</a></li>
+                <li><form class="d-flex">
+                    <input class="form-control me-2 btn-alter" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-primary btn-alter" type="submit">{{ 'label_search'|trans }} </button>
+                </form></li>
+                <li class="dropdown">
+                    <button class="btn btn-primary btn-alter dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ 'message_sort_by'|trans }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li class="dropdown-item-styled">
+                            <a class="dropdown-item" href="#">
+                                {{ knp_pagination_sortable(pagination, 'label_title'|trans, 'event.title') }}
+                            </a>
+                        </li>
+                        <li class="dropdown-item-styled">
+                            <a class="dropdown-item" href="#">
+                                {{ knp_pagination_sortable(pagination, 'label_date'|trans, 'event.date') }}
+                            </a>
+                        </li>
+                        <li class="dropdown-item-styled">
+                            <a class="dropdown-item" href="#">
+                                {{ knp_pagination_sortable(pagination, 'label_category'|trans, 'category.title') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="col index-col five-cols">
+                    {% if pagination is defined and pagination.items|length %}
+
+                    {% for event in pagination.items %}
+                    <div class="card">
+                        <img src="{{ asset('img/template-image.png') }}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <p class="card-text card-light">{{ event.date|format_date('long') }}</p>
+                            <h5 class="card-title">{{ event.title }}</h5>
+                            <p class="card-text card-desc">{{ event.description }}</p>
+                            <p class="card-text card-light card-cat">{{ 'label_category'|trans }}: {{ event.category.title }}</p>
+                            <p class="card-text card-light card-tags">{{ 'label_tags'|trans }}:
+                            {% if event.tags is defined and event.tags|length %}
+                                {% for tag in event.tags %}
+                                    {{ tag.title }}
+                                {% endfor %}
+                            {% else %}
+
+                            {% endif %}
+                            </p>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col index-col">
+                                        {% if is_granted('VIEW') %}
+                                            <a href="{{ url('event_show', {id: event.id}) }}" title="{{ 'action_view'|trans }}" class="iconlink">
+                                                <i class="bi bi-file-check"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col index-col">
+                                        {% if is_granted('EDIT') %}
+                                            <a href="{{ url('event_edit', {id: event.id}) }}" title="{{ 'action_edit'|trans }}" class="iconlink">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col index-col">
+                                        {% if is_granted('DELETE') %}
+                                            <a href="{{ url('event_delete', {id: event.id}) }}" title="{{ 'action_delete'|trans }}" class="iconlink">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                        <p>
+                            {{ 'message_empty_list'|trans }}
+                        </p>
+                    {% endif %}
+                </div>
+
+
+            </div>
+            <div class="navigation text-center ">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    {% endblock %}
+
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            return new bootstrap.Dropdown(dropdownToggleEl)
+        })
+
+        $(document).on("contextmenu", "body", function (event) {
+            //we won't show the default context menu
+            event.preventDefault();
+
+            //showing it close to our cursor
+            $('#menu').css({
+                top: (event.pageY) + "px",
+                left: (event.pageX) + "px"
+            }).show();
+
+            $(document).on('click.contextmenu', function () {
+                $('#menu').hide();
+                $(document).off('click.contextmenu');
+            });
+        });
+    </script>
+{% endblock %}

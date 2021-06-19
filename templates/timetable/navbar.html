@@ -1,0 +1,34 @@
+ <nav class="navbar navbar-fixed-top navbar-inverse navbar-dark bg-dark navbar-expand-lg  ">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url('event_index') }}">
+                {{ 'title_your_timetable'|trans }}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ url('contact_index') }}">
+                            {{ 'title_contacts'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            {{ 'title_your_profile'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url('category_index') }}">
+                            {{ 'title_categories'|trans }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ url('tag_index') }}">
+                            {{ 'title_tags'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
