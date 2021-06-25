@@ -1,4 +1,7 @@
 <?php
+/**
+ * User Data Fixtures
+ */
 
 namespace App\DataFixtures;
 
@@ -24,7 +27,7 @@ class UsersDataFixtures extends AbstractBaseFixtures implements DependentFixture
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(120, 'usersData', function($i) {
+        $this->createMany(120, 'usersData', function ($i) {
             $usersData = new UsersData();
             $usersData->setName($this->faker->firstName(null));
             $usersData->setSurname($this->faker->lastName);
@@ -33,8 +36,8 @@ class UsersDataFixtures extends AbstractBaseFixtures implements DependentFixture
             $usersData->setBirthDate($this->faker->dateTime('now'));
 
             $usersData->setAuthor($this->getRandomReference('users'));
-            return $usersData;
 
+            return $usersData;
         });
             $this->manager->flush();
     }
@@ -50,4 +53,3 @@ class UsersDataFixtures extends AbstractBaseFixtures implements DependentFixture
         return [UserFixtures::class];
     }
 }
-

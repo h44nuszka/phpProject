@@ -3,8 +3,10 @@
  * Category fixture.
  */
 namespace App\DataFixtures;
+
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
+
 /**
  * Class CategoryFixtures.
  */
@@ -27,7 +29,7 @@ class CategoryFixtures extends AbstractBaseFixtures
                 $category->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
 
                 return $category;
-             }
+            }
         );
         $manager->flush();
     }

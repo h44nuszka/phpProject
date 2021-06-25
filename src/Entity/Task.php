@@ -133,15 +133,21 @@ class Task
         $this->title = $title;
     }
 
+    /**
+     * @return \App\Entity\Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self
+    /**
+     * @param \App\Entity\Category|null $category
+     *
+     * @return $this
+     */
+    public function setCategory(?Category $category): void
     {
         $this->category = $category;
-
-        return $this;
     }
 }

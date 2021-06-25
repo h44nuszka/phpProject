@@ -55,7 +55,8 @@ class EventType extends AbstractType
 
         $builder->add(
             'date',
-            DateTimeType::class, [
+            DateTimeType::class,
+            [
                'years' => range(date('Y') - 0, date('Y') + 15),
             ],
             [
@@ -78,9 +79,9 @@ class EventType extends AbstractType
         );
 
         $builder->add(
-          'tags',
-          EntityType::class,
-          [
+            'tags',
+            EntityType::class,
+            [
               'class' => Tag::class,
               'choice_label' => function ($tag) {
                   return $tag->getTitle();
@@ -90,9 +91,8 @@ class EventType extends AbstractType
               'required' => false,
               'expanded' => true,
               'multiple' => true,
-          ]
+            ]
         );
-
     }
 
     /**

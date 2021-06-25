@@ -1,4 +1,7 @@
 <?php
+/**
+ * Users Data Repository
+ */
 
 namespace App\Repository;
 
@@ -22,16 +25,22 @@ class UsersDataRepository extends ServiceEntityRepository
      * Use constants to define configuration options that rarely change instead
      * of specifying them in app/config/config.yml.
      * See https://symfony.com/doc/current/best_practices.html#configuration
-     *
      * @constant int
      */
     public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+    /**
+     * UsersDataRepository constructor.
+     * @param \Doctrine\Persistence\ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, UsersData::class);
     }
 
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->getOrCreateQueryBuilder()
@@ -70,6 +79,12 @@ class UsersDataRepository extends ServiceEntityRepository
         $this->_em->remove($usersData);
         $this->_em->flush();
     }
+
+    /**
+     * @param \App\Entity\User $user
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function queryByAuthor(User $user): QueryBuilder
     {
         $queryBuilder = $this->queryAll();
@@ -79,6 +94,11 @@ class UsersDataRepository extends ServiceEntityRepository
         return $queryBuilder;
     }
 
+    /**
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('usersData');

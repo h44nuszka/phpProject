@@ -7,6 +7,7 @@ namespace App\DataFixtures;
 use App\Entity\Event;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+
 /**
  * Class EventFixtures.
  */
@@ -19,7 +20,7 @@ class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInte
      */
     public function loadData(ObjectManager $manager): void
     {
-        $this->createMany(120, 'events', function($i) {
+        $this->createMany(120, 'events', function ($i) {
             $event = new Event();
             $event->setTitle($this->faker->sentence);
             $event->setDescription($this->faker->sentence);
@@ -31,7 +32,7 @@ class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInte
                 $this->faker->numberBetween(0, 5)
             );
 
-            foreach($tags as $tag){
+            foreach ($tags as $tag) {
                 $event->addTag($tag);
             }
 
@@ -41,7 +42,7 @@ class EventFixtures extends AbstractBaseFixtures implements DependentFixtureInte
         });
 
         $this->manager->flush();
-}
+    }
     /**
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.

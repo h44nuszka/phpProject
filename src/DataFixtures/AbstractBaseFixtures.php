@@ -1,13 +1,16 @@
 <?php
+
 /**
  * Base fixtures.
  */
 namespace App\DataFixtures;
+
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use InvalidArgumentException;
 use LogicException;
+
 /**
  * Class AbstractBaseFixtures.
  */
@@ -58,11 +61,13 @@ abstract class AbstractBaseFixtures extends Fixture
      * return $user;
      * });
      *
-     * @param int $count Number of object to create
-     * @param string $groupName Tag these created objects with this group name,
-     * and use this later with getRandomReference(s)
-     * to fetch only from this specific group
-     * @param callable $factory Defines method of creating objects
+     * @param int      $count     Number of object to create
+     * @param string   $groupName Tag these created objects with this group name,
+     *                            and use this later with getRandomReference(s)
+     *                            to fetch only from this specific group
+
+
+     * @param callable $factory   Defines method of creating objects
      */
     protected function createMany(int $count, string $groupName, callable $factory): void
     {
@@ -97,13 +102,14 @@ abstract class AbstractBaseFixtures extends Fixture
             throw new InvalidArgumentException(sprintf('Did not find any references saved with the group name "%s"', $groupName));
         }
         $randomReferenceKey = $this->faker->randomElement($this->referencesIndex[$groupName]);
+
         return $this->getReference($randomReferenceKey);
     }
     /**
      * Get array of objects references based on count.
      *
      * @param string $groupName Object group name
-     * @param int $count Number of references
+     * @param int    $count     Number of references
      *
      * @return array Result
      */
@@ -113,6 +119,7 @@ abstract class AbstractBaseFixtures extends Fixture
         while (count($references) < $count) {
             $references[] = $this->getRandomReference($groupName);
         }
+
         return $references;
     }
 }

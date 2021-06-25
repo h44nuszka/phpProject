@@ -1,4 +1,7 @@
 <?php
+/**
+ * Tag Repository
+ */
 
 namespace App\Repository;
 
@@ -26,6 +29,10 @@ class TagRepository extends ServiceEntityRepository
      */
     public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+    /**
+     * TagRepository constructor.
+     * @param \Doctrine\Persistence\ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tag::class);
@@ -42,6 +49,12 @@ class TagRepository extends ServiceEntityRepository
             ->orderBy('tag.updatedAt', 'DESC');
     }
 
+    /**
+     * @param \App\Entity\Tag $tag
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function save(Tag $tag): void
     {
         $this->_em->persist($tag);
@@ -73,5 +86,4 @@ class TagRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('tag');
     }
-
 }

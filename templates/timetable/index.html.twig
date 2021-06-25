@@ -12,11 +12,6 @@
                 <li><a href="{{ url('event_create') }}" class="btn btn-primary btn-alter" title="{{ 'label_add'|trans }}">
                         <i class="bi bi-calendar-plus"></i>
                     </a></li>
-                <li><a href="{{ url('event_index') }}" class="btn btn-primary btn-alter">{{ 'label_filter'|trans }}</a></li>
-                <li><form class="d-flex">
-                    <input class="form-control me-2 btn-alter" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-primary btn-alter" type="submit">{{ 'label_search'|trans }} </button>
-                </form></li>
                 <li class="dropdown">
                     <button class="btn btn-primary btn-alter dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ 'message_sort_by'|trans }}
@@ -51,38 +46,40 @@
                             <p class="card-text card-light">{{ event.date|format_date('long') }}</p>
                             <h5 class="card-title">{{ event.title }}</h5>
                             <p class="card-text card-desc">{{ event.description }}</p>
-                            <p class="card-text card-light card-cat">{{ 'label_category'|trans }}: {{ event.category.title }}</p>
+                            <p class="card-text card-light card-cat">{{ 'label_category'|trans }}:
+
+                                <a href="{{ url('event_index', {'filters.category_id' : event.category.id}) }}" title="{{ event.category.title }}">
+                                    {{ event.category.title }}
+                                </a>
+
+                                </p>
                             <p class="card-text card-light card-tags">{{ 'label_tags'|trans }}:
                             {% if event.tags is defined and event.tags|length %}
                                 {% for tag in event.tags %}
-                                    {{ tag.title }}
+                                    <a href="{{ url('event_index', {'filters.tag_id' : tag.id}) }}" title="{{ tag.title }}">
+                                        {{ tag.title }}
+                                    </a>
                                 {% endfor %}
                             {% else %}
-
+                                &nbsp;
                             {% endif %}
                             </p>
                             <div class="container">
                                 <div class="row">
                                     <div class="col index-col">
-                                        {% if is_granted('VIEW') %}
-                                            <a href="{{ url('event_show', {id: event.id}) }}" title="{{ 'action_view'|trans }}" class="iconlink">
-                                                <i class="bi bi-file-check"></i>
-                                            </a>
-                                        {% endif %}
+                                        <a href="{{ url('event_show', {id: event.id}) }}" title="{{ 'action_view'|trans }}" class="iconlink">
+                                            <i class="bi bi-file-check"></i>
+                                        </a>
                                     </div>
                                     <div class="col index-col">
-                                        {% if is_granted('EDIT') %}
-                                            <a href="{{ url('event_edit', {id: event.id}) }}" title="{{ 'action_edit'|trans }}" class="iconlink">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                        {% endif %}
+                                        <a href="{{ url('event_edit', {id: event.id}) }}" title="{{ 'action_edit'|trans }}" class="iconlink">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
                                     </div>
                                     <div class="col index-col">
-                                        {% if is_granted('DELETE') %}
-                                            <a href="{{ url('event_delete', {id: event.id}) }}" title="{{ 'action_delete'|trans }}" class="iconlink">
-                                                <i class="bi bi-trash"></i>
-                                            </a>
-                                        {% endif %}
+                                        <a href="{{ url('event_delete', {id: event.id}) }}" title="{{ 'action_delete'|trans }}" class="iconlink">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

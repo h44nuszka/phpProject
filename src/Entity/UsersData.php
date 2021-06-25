@@ -34,6 +34,7 @@ class UsersData
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
      * @Assert\Type(type="string")
      * @Assert\NotBlank
      * @Assert\Length(
@@ -49,6 +50,7 @@ class UsersData
      * @var string
      *
      * @ORM\Column(type="string", length=255)
+     *
      * @Assert\Type(type="string")
      */
     private $surname;
@@ -103,6 +105,8 @@ class UsersData
 
     /**
      * Getter for name.
+     *
+     * @return $this
      */
     public function getName(): ?string
     {
@@ -111,6 +115,7 @@ class UsersData
 
     /**
      * Setter for name.
+     * @param string $name
      *
      * @return $this
      */
@@ -121,6 +126,8 @@ class UsersData
 
     /**
      * Getter for surname.
+     *
+     * @return $this
      */
     public function getSurname(): ?string
     {
@@ -129,6 +136,7 @@ class UsersData
 
     /**
      * Setter for surname.
+     * @param string $surname
      *
      * @return $this
      */
@@ -139,6 +147,8 @@ class UsersData
 
     /**
      * Getter for nick.
+     *
+     * @return $this
      */
     public function getNick(): ?string
     {
@@ -159,6 +169,8 @@ class UsersData
 
     /**
      * Getter for Phone Number.
+     *
+     * @return $this
      */
     public function getPhoneNumber(): ?string
     {
@@ -167,6 +179,7 @@ class UsersData
 
     /**
      * Setter for phone number.
+     * @param string|null $phoneNumber
      *
      * @return $this
      */
@@ -177,6 +190,7 @@ class UsersData
 
     /**
      * Getter for birth date.
+     * @return $this
      */
     public function getBirthDate(): ?DateTimeInterface
     {
@@ -195,11 +209,19 @@ class UsersData
         $this->birthDate = $birthDate;
     }
 
+    /**
+     * @return \App\Entity\User|null
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * @param \App\Entity\User|null $author
+     *
+     * @return $this
+     */
     public function setAuthor(?User $author): self
     {
         $this->author = $author;

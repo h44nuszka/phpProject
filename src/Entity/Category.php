@@ -11,6 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as  Assert;
+
 /**
  * Class Category.
  *
@@ -77,15 +78,6 @@ class Category
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity=Task::class,
-     *     mappedBy="category",
-     *     fetch="EXTRA_LAZY"
-     * )
-     */
-    private Collection $tasks;
-
-    /**
-     * @ORM\OneToMany(
      *     targetEntity=Event::class,
      *     mappedBy="category",
      *     fetch="EXTRA_LAZY"
@@ -95,10 +87,14 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=64)
+     *
      * @Gedmo\Slug(fields={"title"})
      */
     private $code;
 
+    /**
+     * Category constructor.
+     */
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -176,35 +172,6 @@ class Category
     }
 
     /**
-     * @return Collection|Task[]
-     */
-    public function getTasks(): Collection
-    {
-        return $this->tasks;
-    }
-
-    public function addTask(Task $task): self
-    {
-        if (!$this->tasks->contains($task)) {
-            $this->tasks[] = $task;
-            $task->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTask(Task $task): void
-    {
-        if ($this->tasks->contains($task)) {
-            $this->tasks->remove($task);
-            // set the owning side to null (unless already changed)
-            if ($task->getCategory() === $this) {
-                $task->setCategory(null);
-            }
-        }
-    }
-
-    /**
      * @return Collection|Event[]
      */
     public function getEvents(): Collection
@@ -212,6 +179,11 @@ class Category
         return $this->events;
     }
 
+    /**
+     * @param \App\Entity\Event $event
+     *
+     * @return $this
+     */
     public function addEvent(Event $event): self
     {
         if (!$this->events->contains($event)) {
@@ -222,6 +194,11 @@ class Category
         return $this;
     }
 
+    /**
+     * @param \App\Entity\Event $event
+     *
+     * @return $this
+     */
     public function removeEvent(Event $event): self
     {
         if ($this->events->removeElement($event)) {
@@ -234,11 +211,17 @@ class Category
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * @param string $code
+     */
     public function setCode(string $code): void
     {
         $this->code = $code;

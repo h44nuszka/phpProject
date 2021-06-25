@@ -34,6 +34,7 @@ class Event
      * Title.
      *
      * @var string
+     *
      * @ORM\Column(
      *     type="string",
      *     length=255
@@ -51,6 +52,7 @@ class Event
      * Description.
      *
      * @var string
+     *
      * @ORM\Column(
      *     type="string",
      *     length=255,
@@ -102,6 +104,9 @@ class Event
      */
     private $author;
 
+    /**
+     * Event constructor.
+     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -135,7 +140,6 @@ class Event
     public function setTitle(string $title): void
     {
         $this->title = $title;
-
     }
 
     /**
@@ -151,7 +155,7 @@ class Event
     /**
      * Setter for Title.
      *
-     * @param string $title Title
+     * @param string|null $description
      */
     public function setDescription(?string $description): void
     {
@@ -178,11 +182,17 @@ class Event
         $this->date = $date;
     }
 
+    /**
+     * @return \App\Entity\Category|null
+     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+    /**
+     * @param \App\Entity\Category|null $category
+     */
     public function setCategory(?Category $category): void
     {
         $this->category = $category;
@@ -196,6 +206,9 @@ class Event
         return $this->tags;
     }
 
+    /**
+     * @param \App\Entity\Tag $tag
+     */
     public function addTag(Tag $tag): void
     {
         if (!$this->tags->contains($tag)) {
@@ -203,16 +216,25 @@ class Event
         }
     }
 
+    /**
+     * @param \App\Entity\Tag $tag
+     */
     public function removeTag(Tag $tag): void
     {
         $this->tags->removeElement($tag);
     }
 
+    /**
+     * @return \App\Entity\User|null
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * @param \App\Entity\User|null $author
+     */
     public function setAuthor(?User $author): void
     {
         $this->author = $author;

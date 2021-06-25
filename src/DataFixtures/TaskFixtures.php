@@ -3,9 +3,11 @@
  * Task fixtures.
  */
 namespace App\DataFixtures;
+
 use App\Entity\Task;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+
 /**
  * Class TaskFixtures.
  */
@@ -24,6 +26,7 @@ class TaskFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             $task->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $task->setUpdatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
             $task->setCategory($this->getRandomReference('categories'));
+
             return $task;
         });
         $manager->flush();

@@ -1,7 +1,11 @@
 <?php
+/**
+ * Event Repository.
+ */
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Event;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -27,14 +31,23 @@ class EventRepository extends ServiceEntityRepository
      */
     public const PAGINATOR_ITEMS_PER_PAGE = 10;
 
+    /**
+     * EventRepository constructor.
+     * @param \Doctrine\Persistence\ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Event::class);
     }
 
-    public function queryAll(): QueryBuilder
+    /**
+     * @param array $filters
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function queryAll(array $filters = []): QueryBuilder
     {
-        return $this->getOrCreateQueryBuilder()
+        $queryBuilder = $this->getOrCreateQueryBuilder()
             ->select(
                 'partial event.{id, date, title, description}',
                 'partial category.{id, title}',
@@ -45,6 +58,24 @@ class EventRepository extends ServiceEntityRepository
             ->join('event.author', 'author')
             ->leftJoin('event.tags', 'tags')
             ->orderBy('event.date', 'DESC');
+        $queryBuilder = $this->applyFiltersToList($queryBuilder, $filters);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \App\Entity\User $user
+     * @param array            $filters
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function queryByAuthor(User $user, array $filters = []): QueryBuilder
+    {
+        $queryBuilder = $this->queryAll($filters);
+        $queryBuilder->andWhere('event.author = :author')
+            ->setParameter('author', $user);
+
+        return $queryBuilder;
     }
 
     /**
@@ -75,18 +106,32 @@ class EventRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    public function queryByAuthor(User $user): QueryBuilder
-    {
-        $queryBuilder = $this->queryAll();
-        $queryBuilder->andWhere('event.author = :author')
-            ->setParameter('author', $user);
 
-        return $queryBuilder;
-    }
-
+    /**
+     * @param \Doctrine\ORM\QueryBuilder|null $queryBuilder
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('event');
     }
 
+    /**
+     * Apply filters to paginated list.
+     *
+     * @param QueryBuilder $queryBuilder Query builder
+     * @param array        $filters      Filters array
+     *
+     * @return QueryBuilder Query builder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, array $filters = []): QueryBuilder
+    {
+        if (isset($filters['category']) && $filters['category'] instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters['category']);
+        }
+
+        return $queryBuilder;
+    }
 }

@@ -26,10 +26,16 @@ class TaskController extends AbstractController
      */
     private TaskRepository $taskRepository;
 
+    /**
+     * @var \Knp\Component\Pager\PaginatorInterface
+     */
     private PaginatorInterface $paginator;
+
 
     /**
      * TaskController constructor.
+     * @param \App\Repository\TaskRepository          $taskRepository
+     * @param \Knp\Component\Pager\PaginatorInterface $paginator
      */
     public function __construct(TaskRepository $taskRepository, PaginatorInterface $paginator)
     {

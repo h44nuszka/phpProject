@@ -8,7 +8,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Repository\EventRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\EventService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -25,28 +25,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EventController extends AbstractController
 {
-    /**
-     * Event repository.
-     */
-    private EventRepository $eventRepository;
-
-    private PaginatorInterface $paginator;
+    private EventService $eventService;
 
     /**
      * EventController constructor.
+     * @param \App\Service\EventService $eventService
      */
-    public function __construct(EventRepository $eventRepository, PaginatorInterface $paginator)
+    public function __construct(EventService $eventService)
     {
-        $this->eventRepository = $eventRepository;
-        $this->paginator = $paginator;
+        $this->eventService = $eventService;
     }
 
     /**
      * Index action.
      *
-     * @param Request            $request         HTTP request
-     * @param EventRepository    $eventRepository Event repository
-     * @param PaginatorInterface $paginator       Paginator
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -57,10 +50,14 @@ class EventController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $pagination = $this->paginator->paginate(
-            $this->eventRepository->queryByAuthor($this->getUser()),
+        $filters = [];
+        $filters['category_id'] = $request->query->getInt('filters_category_id');
+        $filters['tag_id'] = $request->query->getInt('filters_tag_id');
+
+        $pagination = $this->eventService->createPaginatedList(
             $request->query->getInt('page', 1),
-            EventRepository::PAGINATOR_ITEMS_PER_PAGE
+            $this->getUser(),
+            $filters
         );
 
         return $this->render(
@@ -82,14 +79,15 @@ class EventController extends AbstractController
      *     name="event_show",
      *     requirements={"id": "[1-9]\d*"},
      * )
-     *
-     * @IsGranted(
-     *     "VIEW",
-     *     subject="event"
-     * )
      */
     public function show(Event $event): Response
     {
+        if ($event->getAuthor() !== $this->getUser()) {
+            $this->addFlash('warning', 'message.item_not_found');
+
+            return $this->redirectToRoute('event_index');
+        }
+
         return $this->render(
             'timetable/event.html.twig',
             ['event' => $event]
@@ -121,7 +119,7 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $event->setAuthor($this->getUser());
-            $eventRepository->save($event);
+            $this->eventService->save($event, $this->getUser());
 
             $this->addFlash('success', 'message_created_successfully');
 
@@ -152,18 +150,19 @@ class EventController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="event_edit",
      * )
-     * @IsGranted(
-     *     "EDIT",
-     *     subject="event"
-     * )
      */
     public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
     {
+        if ($event->getAuthor() !== $this->getUser()) {
+            $this->addFlash('warning', 'message.item_not_found');
+
+            return $this->redirectToRoute('event_index');
+        }
         $form = $this->createForm(EventType::class, $event, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->save($event);
+            $this->eventService->save($event, $this->getUser());
 
             $this->addFlash('success', 'message_updated_successfully');
 
@@ -197,10 +196,6 @@ class EventController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="event_delete",
      * )
-     * @IsGranted(
-     *     "DELETE",
-     *     subject="event"
-     * )
      */
     public function delete(Request $request, Event $event, EventRepository $eventRepository): Response
     {
@@ -218,7 +213,7 @@ class EventController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->delete($event);
+            $this->eventService->delete($event);
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('event_index');

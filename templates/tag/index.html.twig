@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title_tag_list'|trans }}
+    {{ 'title_tags'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>{{ 'title_tag_list'|trans }}</h1>
+    <h1>{{ 'title_tags'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
         <div class="container">
             <ul class="row nav nav-pills">

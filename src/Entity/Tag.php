@@ -1,4 +1,7 @@
 <?php
+/**
+ * Tag Entity
+ */
 
 namespace App\Entity;
 
@@ -30,6 +33,7 @@ class Tag
      * @ORM\Column(type="datetime")
      *
      * @Assert\Type(type="\DateTimeInterface")
+     *
      * @Gedmo\Timestampable(on="create")
      */
     private DateTimeInterface $createdAt;
@@ -38,6 +42,7 @@ class Tag
      * @ORM\Column(type="datetime")
      *
      * @Assert\Type(type="\DateTimeInterface")
+     *
      * @Gedmo\Timestampable(on="update")
      */
     private DateTimeInterface $updatedAt;
@@ -58,6 +63,7 @@ class Tag
 
     /**
      * @ORM\Column(type="string", length=64)
+     *
      * @Assert\Type(type="string")
      * @Assert\Length(
      *     min="3",
@@ -72,51 +78,81 @@ class Tag
      */
     private $events;
 
+    /**
+     * Tag constructor.
+     */
     public function __construct()
     {
         $this->events = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param \DateTimeInterface $createdAt
+     */
     public function setCreatedAt(DateTimeInterface $createdAt):void
     {
         $this->createdAt = $createdAt;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
+    /**
+     * @param \DateTimeInterface $updatedAt
+     */
     public function setUpdatedAt(DateTimeInterface $updatedAt):void
     {
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     */
     public function setTitle(string $title):void
     {
         $this->title = $title;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCode(): ?string
     {
         return $this->code;
     }
 
+    /**
+     * @param string $code
+     */
     public function setCode(string $code): void
     {
         $this->code = $code;
@@ -130,6 +166,9 @@ class Tag
         return $this->events;
     }
 
+    /**
+     * @param \App\Entity\Event $event
+     */
     public function addEvent(Event $event): void
     {
         if (!$this->events->contains($event)) {
@@ -138,6 +177,9 @@ class Tag
         }
     }
 
+    /**
+     * @param \App\Entity\Event $event
+     */
     public function removeEvent(Event $event): void
     {
         if ($this->events->removeElement($event)) {

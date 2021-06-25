@@ -1,4 +1,7 @@
 <?php
+/**
+ * Task Repository.
+ */
 
 namespace App\Repository;
 
@@ -26,11 +29,14 @@ class TaskRepository extends ServiceEntityRepository
      */
     public const PAGINATOR_ITEMS_PER_PAGE = 3;
 
+    /**
+     * TaskRepository constructor.
+     * @param \Doctrine\Persistence\ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
     }
-
 
     /**
      * Query all records.
@@ -61,7 +67,6 @@ class TaskRepository extends ServiceEntityRepository
         $this->_em->persist($task);
         $this->_em->flush();
     }
-
 
     /**
      * Get or create new query builder.

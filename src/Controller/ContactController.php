@@ -8,7 +8,7 @@ namespace App\Controller;
 use App\Entity\UsersData;
 use App\Form\UsersDataType;
 use App\Repository\UsersDataRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Service\UsersDataService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -25,28 +25,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ContactController extends AbstractController
 {
-    /**
-     * Contact repository.
-     */
-    private UsersDataRepository $usersDataRepository;
-
-    private PaginatorInterface $paginator;
+    private UsersDataService $usersDataService;
 
     /**
-     * Contact Controller constructor.
+     * ContactController constructor.
+     * @param \App\Service\UsersDataService $usersDataService
      */
-    public function __construct(UsersDataRepository $usersDataRepository, PaginatorInterface $paginator)
+    public function __construct(UsersDataService $usersDataService)
     {
-        $this->usersDataRepository = $usersDataRepository;
-        $this->paginator = $paginator;
+        $this->usersDataService = $usersDataService;
     }
 
     /**
      * Index action.
      *
-     * @param Request             $request             HTTP request
-     * @param UsersDataRepository $usersDataRepository Users Data repository
-     * @param PaginatorInterface  $paginator           Paginator
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      *
@@ -57,10 +50,9 @@ class ContactController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $pagination = $this->paginator->paginate(
-            $this->usersDataRepository->queryByAuthor($this->getUser()),
+        $pagination = $this->usersDataService->createPaginatedList(
             $request->query->getInt('page', 1),
-            UsersDataRepository::PAGINATOR_ITEMS_PER_PAGE
+            $this->getUser()
         );
 
         return $this->render(
@@ -82,12 +74,6 @@ class ContactController extends AbstractController
      *     name="contact_show",
      *     requirements={"id": "[1-9]\d*"},
      * )
-     *
-     *     * @IsGranted(
-     *     "VIEW",
-     *     subject="usersData"
-     * )
-     *
      */
     public function show(UsersData $usersData): Response
     {
@@ -96,6 +82,7 @@ class ContactController extends AbstractController
 
             return $this->redirectToRoute('contact_index');
         }
+
         return $this->render(
             'contact/contact.html.twig',
             ['usersData' => $usersData]
@@ -127,7 +114,7 @@ class ContactController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $usersData->setAuthor($this->getUser());
-            $usersDataRepository->save($usersData);
+            $this->usersDataService->save($usersData, $this->getUser());
 
             $this->addFlash('success', 'message_created_successfully');
 
@@ -158,11 +145,6 @@ class ContactController extends AbstractController
      *     requirements={"id": "[1-9]\d*"},
      *     name="contact_edit",
      * )
-     *
-     * @IsGranted(
-     *     "EDIT",
-     *     subject="usersData"
-     * )
      */
     public function edit(Request $request, UsersData $usersData, UsersDataRepository $usersDataRepository): Response
     {
@@ -171,12 +153,11 @@ class ContactController extends AbstractController
 
             return $this->redirectToRoute('contact_index');
         }
-
         $form = $this->createForm(UsersDataType::class, $usersData, ['method' => 'PUT']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $usersDataRepository->save($usersData);
+            $this->usersDataService->save($usersData, $this->getUser());
 
             $this->addFlash('success', 'message_updated_successfully');
 
@@ -209,10 +190,6 @@ class ContactController extends AbstractController
      *     methods={"GET", "DELETE"},
      *     requirements={"id": "[1-9]\d*"},
      *     name="contact_delete",
-     * )
-     * @IsGranted(
-     *     "DELETE",
-     *     subject="usersData"
      * )
      */
     public function delete(Request $request, UsersData $usersData, UsersDataRepository $usersDataRepository): Response

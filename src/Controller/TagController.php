@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Tag;
 use App\Form\TagType;
 use App\Repository\TagRepository;
+use App\Service\TagService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -22,28 +23,23 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TagController extends AbstractController
 {
-    /**
-     * Tag repository.
-     */
-    private TagRepository $tagRepository;
-
-    private PaginatorInterface $paginator;
+    private TagService $tagService;
 
     /**
      * TagController constructor.
+     * @param \App\Service\TagService $tagService
      */
-    public function __construct(TagRepository $tagRepository, PaginatorInterface $paginator)
+    public function __construct(TagService $tagService)
     {
-        $this->tagRepository = $tagRepository;
-        $this->paginator = $paginator;
+        $this->tagService = $tagService;
     }
 
     /**
      * Index action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request            HTTP request
-     * @param \App\Repository\TagRepository        $tagRepository           tag repository
-     * @param \Knp\Component\Pager\PaginatorInterface   $paginator          Paginator
+     * @param \Symfony\Component\HttpFoundation\Request $request       HTTP request
+     * @param \App\Repository\TagRepository             $tagRepository tag repository
+     * @param \Knp\Component\Pager\PaginatorInterface   $paginator     Paginator
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP response
      *
@@ -55,10 +51,9 @@ class TagController extends AbstractController
      */
     public function index(Request $request, TagRepository $tagRepository, PaginatorInterface $paginator): Response
     {
-        $pagination = $paginator->paginate(
-            $tagRepository->queryAll(),
+        $pagination = $this->tagService->createPaginatedList(
             $request->query->getInt('page', 1),
-            TagRepository::PAGINATOR_ITEMS_PER_PAGE
+            $this->getUser()
         );
 
         return $this->render(
@@ -66,7 +61,6 @@ class TagController extends AbstractController
             ['pagination' => $pagination]
         );
     }
-
 
     /**
      * Create action.
@@ -92,11 +86,11 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->save($tag);
+            $this->tagService->save($tag);
 
             $this->addFlash('success', 'message_created_successfully');
 
-            return $this->redirectToRoute('event_create');
+            return $this->redirectToRoute('tag_index');
         }
 
         return $this->render(
@@ -130,7 +124,7 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->save($tag);
+            $this->tagService->save($tag);
 
             $this->addFlash('success', 'message_updated_successfully');
 
@@ -175,7 +169,7 @@ class TagController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->delete($tag);
+            $this->tagService->delete($tag);
             $this->addFlash('success', 'message_deleted_successfully');
 
             return $this->redirectToRoute('tag_index');
